@@ -1,10 +1,10 @@
 # El Impostor - PWA
 
-Aplicación PWA para jugar al juego "El Impostor" donde 3-8 jugadores juegan localmente en el mismo dispositivo.
+Aplicación PWA para jugar al juego "El Impostor" donde 3-10 jugadores juegan localmente en el mismo dispositivo.
 
 ## 🎮 Cómo Jugar
 
-1. Selecciona el número de jugadores (3-8)
+1. Selecciona el número de jugadores (3-10)
 2. Elige un tema de palabras
 3. Cada jugador pasa el dispositivo y revela su palabra
 4. El impostor no conoce la palabra y debe descubrirla sin ser detectado

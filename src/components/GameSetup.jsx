@@ -5,14 +5,14 @@ function GameSetup({ onStart }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (numPlayers >= 3 && numPlayers <= 8) {
+    if (numPlayers >= 3 && numPlayers <= 10) {
       onStart(numPlayers)
     }
   }
 
   const handleChange = (e) => {
     const value = parseInt(e.target.value)
-    if (value >= 3 && value <= 8) {
+    if (value >= 3 && value <= 10) {
       setNumPlayers(value)
     }
   }
@@ -26,7 +26,7 @@ function GameSetup({ onStart }) {
         <form onSubmit={handleSubmit} className="setup-form">
           <div className="player-input-group">
             <label htmlFor="players" className="label">
-              Número de jugadores (3-8)
+              Número de jugadores (3-10)
             </label>
             <div className="input-wrapper">
               <button
@@ -41,7 +41,7 @@ function GameSetup({ onStart }) {
                 type="number"
                 id="players"
                 min="3"
-                max="8"
+                max="10"
                 value={numPlayers}
                 onChange={handleChange}
                 className="player-input"
@@ -49,8 +49,8 @@ function GameSetup({ onStart }) {
               <button
                 type="button"
                 className="btn-increment"
-                onClick={() => setNumPlayers(Math.min(8, numPlayers + 1))}
-                disabled={numPlayers >= 8}
+                onClick={() => setNumPlayers(Math.min(10, numPlayers + 1))}
+                disabled={numPlayers >= 10}
               >
                 +
               </button>
