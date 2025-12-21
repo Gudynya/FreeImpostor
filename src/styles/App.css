@@ -329,10 +329,11 @@ body {
 .impostor-result {
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, var(--impostor-color) 0%, #c73650 100%);
+  background: var(--accent-color);
   border-radius: 20px;
   box-shadow: var(--shadow-lg);
   width: 100%;
+  color: var(--text-light);
 }
 
 .impostor-icon {
@@ -346,17 +347,19 @@ body {
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
+  color: var(--impostor-color);
 }
 
 .impostor-message {
   font-size: 1.1rem;
-  opacity: 0.95;
+  opacity: 0.9;
+  color: var(--text-light);
 }
 
 .hint-section {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .hint-label {
@@ -364,6 +367,7 @@ body {
   font-weight: 600;
   margin-bottom: 0.75rem;
   opacity: 0.9;
+  color: var(--text-light);
 }
 
 .hint-display {
@@ -371,20 +375,20 @@ body {
   font-weight: 700;
   margin: 1rem 0;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-light);
 }
 
 .word-result {
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, var(--word-color) 0%, #00a8cc 100%);
+  background: var(--accent-color);
   border-radius: 20px;
   box-shadow: var(--shadow-lg);
   width: 100%;
-  color: var(--text-dark);
+  color: var(--text-light);
 }
 
 .word-icon {
@@ -396,6 +400,7 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  color: var(--text-light);
 }
 
 .word-display {
@@ -404,12 +409,14 @@ body {
   margin: 1.5rem 0;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: var(--text-light);
 }
 
 .word-message {
   font-size: 1.1rem;
   opacity: 0.9;
+  color: var(--text-light);
 }
 
 .btn-next {
