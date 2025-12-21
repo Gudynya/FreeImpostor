@@ -1,6 +1,6 @@
 import { wordsByTheme } from '../data/words'
 
-export function generateGame(numPlayers, theme, enableHints = false) {
+export function generateGame(numPlayers, theme, hintLevel = 'none') {
   // Seleccionar palabra aleatoria del tema
   const words = wordsByTheme[theme]
   if (!words || words.length === 0) {
@@ -10,9 +10,17 @@ export function generateGame(numPlayers, theme, enableHints = false) {
   const randomIndex = Math.floor(Math.random() * words.length)
   const selectedWord = words[randomIndex]
   
-  // Extraer palabra y pista
+  // Extraer palabra y pista según el nivel
   const word = typeof selectedWord === 'string' ? selectedWord : selectedWord.word
-  const hint = typeof selectedWord === 'string' ? null : selectedWord.hint
+  let hint = null
+  
+  if (typeof selectedWord !== 'string') {
+    if (hintLevel === 'easy' && selectedWord.hintEasy) {
+      hint = selectedWord.hintEasy
+    } else if (hintLevel === 'hard' && selectedWord.hintHard) {
+      hint = selectedWord.hintHard
+    }
+  }
   
   // Seleccionar impostor aleatorio
   const impostorIndex = Math.floor(Math.random() * numPlayers)
@@ -24,7 +32,7 @@ export function generateGame(numPlayers, theme, enableHints = false) {
       playerNumber: i + 1,
       isImpostor: i === impostorIndex,
       word: i === impostorIndex ? null : word,
-      hint: (i === impostorIndex && enableHints) ? hint : null
+      hint: (i === impostorIndex && hintLevel !== 'none') ? hint : null
     })
   }
   
@@ -32,7 +40,7 @@ export function generateGame(numPlayers, theme, enableHints = false) {
     theme,
     word,
     hint,
-    enableHints,
+    hintLevel,
     impostorIndex,
     players
   }

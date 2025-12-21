@@ -2,12 +2,12 @@ import { useState } from 'react'
 
 function GameSetup({ onStart }) {
   const [numPlayers, setNumPlayers] = useState(4)
-  const [enableHints, setEnableHints] = useState(false)
+  const [hintLevel, setHintLevel] = useState('none') // 'none', 'easy', 'hard'
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (numPlayers >= 3 && numPlayers <= 10) {
-      onStart(numPlayers, enableHints)
+      onStart(numPlayers, hintLevel)
     }
   }
 
@@ -59,17 +59,19 @@ function GameSetup({ onStart }) {
           </div>
           
           <div className="hints-option">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={enableHints}
-                onChange={(e) => setEnableHints(e.target.checked)}
-                className="checkbox-input"
-              />
-              <span className="checkbox-text">
-                Dar pista al impostor
-              </span>
+            <label className="label" htmlFor="hint-level">
+              Nivel de pista para el impostor
             </label>
+            <select
+              id="hint-level"
+              value={hintLevel}
+              onChange={(e) => setHintLevel(e.target.value)}
+              className="hint-select"
+            >
+              <option value="none">Ninguna</option>
+              <option value="easy">Fácil</option>
+              <option value="hard">Difícil</option>
+            </select>
           </div>
           
           <button type="submit" className="btn-primary">
