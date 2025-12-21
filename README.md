@@ -27,6 +27,18 @@ npm run dev
 npm run build
 ```
 
+## 🌐 GitHub Pages
+
+La aplicación está configurada para desplegarse automáticamente en GitHub Pages usando GitHub Actions.
+
+### Configuración
+
+1. Ve a **Settings** → **Pages** en tu repositorio de GitHub
+2. En **Source**, selecciona **GitHub Actions**
+3. El workflow se ejecutará automáticamente en cada push a la rama `master`
+
+La aplicación estará disponible en: `https://gudynya.github.io/FreeImpostor/`
+
 ## 📦 Características PWA
 
 - Instalable en dispositivos móviles
