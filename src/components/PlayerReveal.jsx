@@ -70,9 +70,19 @@ function PlayerReveal({ playerNumber, totalPlayers, playerInfo, onNext }) {
               <div className="impostor-result">
                 <div className="impostor-icon">🎭</div>
                 <h2 className="impostor-title">IMPOSTOR</h2>
-                <p className="impostor-message">
-                  No conoces la palabra. ¡Debes descubrirla sin que te atrapen!
-                </p>
+                {playerInfo.hint ? (
+                  <div className="hint-section">
+                    <p className="hint-label">Tu pista:</p>
+                    <div className="hint-display">{playerInfo.hint}</div>
+                    <p className="impostor-message">
+                      ¡Descubre la palabra sin que te atrapen!
+                    </p>
+                  </div>
+                ) : (
+                  <p className="impostor-message">
+                    No conoces la palabra. ¡Debes descubrirla sin que te atrapen!
+                  </p>
+                )}
               </div>
             ) : (
               <div className="word-result">
