@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { loadGamePreferences, saveGamePreferences } from '../utils/localStorage'
 
 function GameSetup({ onStart }) {
-  const [numPlayers, setNumPlayers] = useState(4)
-  const [hintLevel, setHintLevel] = useState('none') // 'none', 'easy', 'hard'
+  // Cargar preferencias guardadas al montar el componente
+  const savedPreferences = loadGamePreferences()
+  const [numPlayers, setNumPlayers] = useState(savedPreferences.numPlayers || 4)
+  const [hintLevel, setHintLevel] = useState(savedPreferences.hintLevel || 'none')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (numPlayers >= 3 && numPlayers <= 10) {
+      // Guardar preferencias en localStorage
+      saveGamePreferences(numPlayers, hintLevel)
       onStart(numPlayers, hintLevel)
     }
   }
