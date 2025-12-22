@@ -2,16 +2,18 @@ import { useState } from 'react'
 import GameSetup from './components/GameSetup'
 import ThemeSelector from './components/ThemeSelector'
 import PlayerReveal from './components/PlayerReveal'
+import RoundStart from './components/RoundStart'
 import GameEnd from './components/GameEnd'
 import { generateGame } from './utils/gameLogic'
 
 function App() {
-  const [gameState, setGameState] = useState('setup') // setup, theme, playing, ended
+  const [gameState, setGameState] = useState('setup') // setup, theme, playing, roundStart, ended
   const [numPlayers, setNumPlayers] = useState(0)
   const [hintLevel, setHintLevel] = useState('none')
   const [selectedTheme, setSelectedTheme] = useState(null)
   const [gameData, setGameData] = useState(null)
   const [currentPlayer, setCurrentPlayer] = useState(0)
+  const [startingPlayer, setStartingPlayer] = useState(0)
 
   const handleStartGame = (players, level) => {
     setNumPlayers(players)
@@ -31,8 +33,15 @@ function App() {
     if (currentPlayer < numPlayers - 1) {
       setCurrentPlayer(currentPlayer + 1)
     } else {
-      setGameState('ended')
+      // Seleccionar jugador aleatorio para empezar la ronda
+      const randomStartingPlayer = Math.floor(Math.random() * numPlayers) + 1
+      setStartingPlayer(randomStartingPlayer)
+      setGameState('roundStart')
     }
+  }
+
+  const handleContinueToSummary = () => {
+    setGameState('ended')
   }
 
   const handleNewGame = () => {
@@ -42,6 +51,7 @@ function App() {
     setSelectedTheme(null)
     setGameData(null)
     setCurrentPlayer(0)
+    setStartingPlayer(0)
   }
 
   return (
@@ -58,6 +68,13 @@ function App() {
           totalPlayers={numPlayers}
           playerInfo={gameData.players[currentPlayer]}
           onNext={handleNextPlayer}
+        />
+      )}
+      {gameState === 'roundStart' && (
+        <RoundStart
+          startingPlayer={startingPlayer}
+          totalPlayers={numPlayers}
+          onContinue={handleContinueToSummary}
         />
       )}
       {gameState === 'ended' && (

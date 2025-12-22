@@ -442,6 +442,52 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
+/* Round Start */
+.round-start {
+  width: 100%;
+}
+
+.starting-player-card {
+  background: var(--accent-color);
+  color: var(--text-light);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.player-number-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.player-number-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.player-number-value {
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.starting-message {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  margin-top: 1rem;
+}
+
+.round-actions {
+  margin-top: 2rem;
+}
+
 /* Game End */
 .game-end {
   width: 100%;
