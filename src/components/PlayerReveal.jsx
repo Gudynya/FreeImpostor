@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function PlayerReveal({ playerNumber, totalPlayers, playerInfo, onNext }) {
   const [revealed, setRevealed] = useState(false)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
+
+  // Resetear el estado cuando cambia el jugador
+  useEffect(() => {
+    setRevealed(false)
+    setTouchStart(null)
+    setTouchEnd(null)
+  }, [playerNumber])
 
   const minSwipeDistance = 50
 
