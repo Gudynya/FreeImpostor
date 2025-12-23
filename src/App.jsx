@@ -9,21 +9,21 @@ import { generateGame } from './utils/gameLogic'
 function App() {
   const [gameState, setGameState] = useState('setup') // setup, theme, playing, roundStart, ended
   const [numPlayers, setNumPlayers] = useState(0)
-  const [hintLevel, setHintLevel] = useState('none')
+  const [playerHints, setPlayerHints] = useState([])
   const [selectedTheme, setSelectedTheme] = useState(null)
   const [gameData, setGameData] = useState(null)
   const [currentPlayer, setCurrentPlayer] = useState(0)
   const [startingPlayer, setStartingPlayer] = useState(0)
 
-  const handleStartGame = (players, level) => {
+  const handleStartGame = (players, hints) => {
     setNumPlayers(players)
-    setHintLevel(level)
+    setPlayerHints(hints)
     setGameState('theme')
   }
 
   const handleThemeSelected = (theme) => {
     setSelectedTheme(theme)
-    const game = generateGame(numPlayers, theme, hintLevel)
+    const game = generateGame(numPlayers, theme, playerHints)
     setGameData(game)
     setCurrentPlayer(0)
     setGameState('playing')
@@ -47,7 +47,7 @@ function App() {
   const handleNewGame = () => {
     setGameState('setup')
     setNumPlayers(0)
-    setHintLevel('none')
+    setPlayerHints([])
     setSelectedTheme(null)
     setGameData(null)
     setCurrentPlayer(0)

@@ -5,22 +5,66 @@ function GameSetup({ onStart }) {
   // Cargar preferencias guardadas al montar el componente
   const savedPreferences = loadGamePreferences()
   const [numPlayers, setNumPlayers] = useState(savedPreferences.numPlayers || 4)
-  const [hintLevel, setHintLevel] = useState(savedPreferences.hintLevel || 'none')
+  const [playerHints, setPlayerHints] = useState(() => {
+    // Inicializar con preferencias guardadas o valores por defecto
+    if (savedPreferences.playerHints && savedPreferences.playerHints.length === (savedPreferences.numPlayers || 4)) {
+      return savedPreferences.playerHints
+    }
+    // Crear array con valores por defecto
+    const defaultHints = []
+    for (let i = 0; i < (savedPreferences.numPlayers || 4); i++) {
+      defaultHints.push('none')
+    }
+    return defaultHints
+  })
+
+  // Actualizar playerHints cuando cambia numPlayers
+  useEffect(() => {
+    if (numPlayers !== playerHints.length) {
+      const newHints = []
+      for (let i = 0; i < numPlayers; i++) {
+        newHints.push(playerHints[i] || 'none')
+      }
+      setPlayerHints(newHints.slice(0, numPlayers))
+    }
+  }, [numPlayers])
+
+  const handleNumPlayersChange = (value) => {
+    if (value >= 3 && value <= 10) {
+      setNumPlayers(value)
+      // Ajustar array de hints
+      const newHints = [...playerHints]
+      if (value > playerHints.length) {
+        // Añadir nuevos jugadores con 'none'
+        for (let i = playerHints.length; i < value; i++) {
+          newHints.push('none')
+        }
+      } else {
+        // Reducir array
+        newHints.splice(value)
+      }
+      setPlayerHints(newHints)
+    }
+  }
+
+  const handlePlayerHintChange = (playerIndex, hintLevel) => {
+    const newHints = [...playerHints]
+    newHints[playerIndex] = hintLevel
+    setPlayerHints(newHints)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (numPlayers >= 3 && numPlayers <= 10) {
       // Guardar preferencias en localStorage
-      saveGamePreferences(numPlayers, hintLevel)
-      onStart(numPlayers, hintLevel)
+      saveGamePreferences(numPlayers, playerHints)
+      onStart(numPlayers, playerHints)
     }
   }
 
   const handleChange = (e) => {
     const value = parseInt(e.target.value)
-    if (value >= 3 && value <= 10) {
-      setNumPlayers(value)
-    }
+    handleNumPlayersChange(value)
   }
 
   return (
@@ -38,7 +82,7 @@ function GameSetup({ onStart }) {
               <button
                 type="button"
                 className="btn-decrement"
-                onClick={() => setNumPlayers(Math.max(3, numPlayers - 1))}
+                onClick={() => handleNumPlayersChange(Math.max(3, numPlayers - 1))}
                 disabled={numPlayers <= 3}
               >
                 −
@@ -55,7 +99,7 @@ function GameSetup({ onStart }) {
               <button
                 type="button"
                 className="btn-increment"
-                onClick={() => setNumPlayers(Math.min(10, numPlayers + 1))}
+                onClick={() => handleNumPlayersChange(Math.min(10, numPlayers + 1))}
                 disabled={numPlayers >= 10}
               >
                 +
@@ -63,20 +107,25 @@ function GameSetup({ onStart }) {
             </div>
           </div>
           
-          <div className="hints-option">
-            <label className="label" htmlFor="hint-level">
-              Nivel de pista para el impostor
-            </label>
-            <select
-              id="hint-level"
-              value={hintLevel}
-              onChange={(e) => setHintLevel(e.target.value)}
-              className="hint-select"
-            >
-              <option value="none">Ninguna</option>
-              <option value="easy">Fácil</option>
-              <option value="hard">Difícil</option>
-            </select>
+          <div className="player-hints-config">
+            <h3 className="player-hints-title">Configurar pistas por jugador</h3>
+            <p className="player-hints-subtitle">Define si cada jugador recibirá pista si es el impostor</p>
+            <div className="player-hints-list">
+              {playerHints.map((hintLevel, index) => (
+                <div key={index} className="player-hint-item">
+                  <span className="player-hint-label">Jugador {index + 1}:</span>
+                  <select
+                    value={hintLevel}
+                    onChange={(e) => handlePlayerHintChange(index, e.target.value)}
+                    className="hint-select-small"
+                  >
+                    <option value="none">Ninguna</option>
+                    <option value="easy">Fácil</option>
+                    <option value="hard">Difícil</option>
+                  </select>
+                </div>
+              ))}
+            </div>
           </div>
           
           <button type="submit" className="btn-primary">

@@ -1,12 +1,12 @@
 const STORAGE_KEYS = {
   NUM_PLAYERS: 'elImpostor_numPlayers',
-  HINT_LEVEL: 'elImpostor_hintLevel'
+  PLAYER_HINTS: 'elImpostor_playerHints'
 }
 
-export function saveGamePreferences(numPlayers, hintLevel) {
+export function saveGamePreferences(numPlayers, playerHints) {
   try {
     localStorage.setItem(STORAGE_KEYS.NUM_PLAYERS, numPlayers.toString())
-    localStorage.setItem(STORAGE_KEYS.HINT_LEVEL, hintLevel)
+    localStorage.setItem(STORAGE_KEYS.PLAYER_HINTS, JSON.stringify(playerHints))
   } catch (error) {
     console.error('Error saving to localStorage:', error)
   }
@@ -15,17 +15,26 @@ export function saveGamePreferences(numPlayers, hintLevel) {
 export function loadGamePreferences() {
   try {
     const numPlayers = localStorage.getItem(STORAGE_KEYS.NUM_PLAYERS)
-    const hintLevel = localStorage.getItem(STORAGE_KEYS.HINT_LEVEL)
+    const playerHintsStr = localStorage.getItem(STORAGE_KEYS.PLAYER_HINTS)
+    
+    let playerHints = null
+    if (playerHintsStr) {
+      try {
+        playerHints = JSON.parse(playerHintsStr)
+      } catch (e) {
+        playerHints = null
+      }
+    }
     
     return {
       numPlayers: numPlayers ? parseInt(numPlayers, 10) : null,
-      hintLevel: hintLevel || null
+      playerHints: playerHints
     }
   } catch (error) {
     console.error('Error loading from localStorage:', error)
     return {
       numPlayers: null,
-      hintLevel: null
+      playerHints: null
     }
   }
 }
